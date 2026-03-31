@@ -1,7 +1,6 @@
-package com.murilo.portariaApp.Service.impl;
+package com.murilo.portariaApp.service;
 
 import com.murilo.portariaApp.Entity.User;
-import com.murilo.portariaApp.Service.UserService;
 import com.murilo.portariaApp.dto.user.UserRequestDTO;
 import com.murilo.portariaApp.enums.Role;
 import com.murilo.portariaApp.repository.UserRepository;
@@ -12,15 +11,15 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.UUID;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserService {
 
     private final UserRepository userRepository;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-    @Override
+
     @Transactional
     public User create(UserRequestDTO request) {
         String name = validateName(request.name());
@@ -42,7 +41,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
 
-    @Override
+
     @Transactional
     public User update(UUID id, UserRequestDTO request) {
         User user = findExistingUser(id);
@@ -67,7 +66,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
 
-    @Override
+
     @Transactional
     public void delete(UUID id) {
         User user = findExistingUser(id);
@@ -79,7 +78,7 @@ public class UserServiceImpl implements UserService {
         userRepository.delete(user);
     }
 
-    @Override
+
     public User findById(UUID id) {
         return findExistingUser(id);
     }
