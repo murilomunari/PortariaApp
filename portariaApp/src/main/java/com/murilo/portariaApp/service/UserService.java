@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -34,6 +35,11 @@ public class UserService {
         users.setActive(true);
 
         return userRepository.save(users);
+    }
+
+    @Transactional
+    public List<User> findAll() {
+        return userRepository.findAll();
     }
 
 }
