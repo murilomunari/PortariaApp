@@ -2,14 +2,13 @@ package com.murilo.portariaApp.controller;
 
 import com.murilo.portariaApp.Entity.User;
 import com.murilo.portariaApp.dto.user.UserRequestDTO;
-import com.murilo.portariaApp.repository.UserRepository;
+import com.murilo.portariaApp.dto.user.UserResponseDTO;
 import com.murilo.portariaApp.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("v1/user")
@@ -19,9 +18,14 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<User> create (UserRequestDTO userRequestDTO) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.create(userRequestDTO));
+    public ResponseEntity<UserResponseDTO> create(@RequestBody @Valid UserRequestDTO userRequestDTO) {
+        User user = userService.create(userRequestDTO);
+
+        UserResponseDTO response = new UserResponseDTO(
+                user.getName(),
+                user.getEmail()
+        );
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
-
-
 }
