@@ -10,6 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.UUID;
+
 @RestController
 @RequestMapping("v1/user")
 @RequiredArgsConstructor
@@ -27,5 +30,26 @@ public class UserController {
         );
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<User>> findAll () {
+        return ResponseEntity.status(HttpStatus.OK).body(userService.findAll());
+    }
+
+    @GetMapping("{name}")
+    public ResponseEntity<UserResponseDTO> findByName(@PathVariable String name) {
+
+        return userService.findByName(name)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<UserResponseDTO> patchUser(
+            @PathVariable UUID id,
+            @RequestBody UserResponseDTO request) {
+
+        return ResponseEntity.ok(userService.patchUser(id, request));
     }
 }
