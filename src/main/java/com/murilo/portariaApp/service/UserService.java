@@ -75,4 +75,15 @@ public class UserService {
         );
     }
 
+    @Transactional
+    public void deleteByName(String name) {
+        Optional<User> user = userRepository.findByName(name);
+
+        if (user.isPresent()){
+            userRepository.delete(user.get());
+        } else {
+            throw new UserException("Usuario não encontrado!");
+        }
+    }
+
 }

@@ -52,4 +52,10 @@ public class UserController {
 
         return ResponseEntity.ok(userService.patchUser(id, request));
     }
+
+    @DeleteMapping("{name}")
+    public ResponseEntity<Void> deleteByName (@PathVariable String name) {
+        userService.deleteByName(name);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+    }
 }
