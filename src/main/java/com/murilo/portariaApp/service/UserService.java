@@ -2,6 +2,7 @@ package com.murilo.portariaApp.service;
 
 import com.murilo.portariaApp.Entity.User;
 import com.murilo.portariaApp.dto.user.UserRequestDTO;
+import com.murilo.portariaApp.dto.user.UserResponseDTO;
 import com.murilo.portariaApp.enums.Role;
 import com.murilo.portariaApp.exception.UserException;
 import com.murilo.portariaApp.repository.UserRepository;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -37,9 +39,51 @@ public class UserService {
         return userRepository.save(users);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<User> findAll() {
         return userRepository.findAll();
+    }
+
+    @Transactional(readOnly = true)
+    public Optional<UserResponseDTO> findByName(String name) {
+        return userRepository.findByName(name)
+                .map(user -> new UserResponseDTO(
+                        user.getName(),
+                        user.getEmail()
+                ));
+    }
+
+    @Transactional
+    public UserResponseDTO patchUser(UUID id, UserResponseDTO request) {
+
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Usuario não encontrado"));
+
+        if (request.name() != null) {
+            user.setName(request.name());
+        }
+
+        if (request.email() != null) {
+            user.setEmail(request.email());
+        }
+
+        userRepository.save(user);
+
+        return new UserResponseDTO(
+                user.getName(),
+                user.getEmail()
+        );
+    }
+
+    @Transactional
+    public void deleteByName(String name) {
+        Optional<User> user = userRepository.findByName(name);
+
+        if (user.isPresent()){
+            userRepository.delete(user.get());
+        } else {
+            throw new UserException("Usuario não encontrado!");
+        }
     }
 
 }
