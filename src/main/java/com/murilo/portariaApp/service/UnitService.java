@@ -75,7 +75,6 @@ public class UnitService {
 
     private UnitResponseDTO toResponse(Unit unit) {
         return new UnitResponseDTO(
-                unit.getId(),
                 unit.getNumber(),
                 unit.getBlock(),
                 unit.getFloor(),
