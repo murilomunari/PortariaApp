@@ -33,6 +33,6 @@ build/
 .vscode/
 
 # Arquivos de contexto de IA
-MJ_COPILOT.md
+COPILOT.md
 regras-negocio-package.md
 .claude/
