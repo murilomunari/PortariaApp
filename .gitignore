@@ -31,4 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
-.claude
+
+# Arquivos de contexto de IA
+MJ_COPILOT.md
+regras-negocio-package.md
+.claude/
