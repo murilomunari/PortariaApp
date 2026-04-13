@@ -26,7 +26,8 @@ public class UserController {
 
         UserResponseDTO response = new UserResponseDTO(
                 user.getName(),
-                user.getEmail()
+                user.getEmail(),
+                user.getRole()
         );
 
         return ResponseEntity.status(HttpStatus.CREATED).body(response);

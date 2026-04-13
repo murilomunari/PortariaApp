@@ -49,7 +49,8 @@ public class UserService {
         return userRepository.findByName(name)
                 .map(user -> new UserResponseDTO(
                         user.getName(),
-                        user.getEmail()
+                        user.getEmail(),
+                        user.getRole()
                 ));
     }
 
@@ -71,7 +72,8 @@ public class UserService {
 
         return new UserResponseDTO(
                 user.getName(),
-                user.getEmail()
+                user.getEmail(),
+                user.getRole()
         );
     }
 
