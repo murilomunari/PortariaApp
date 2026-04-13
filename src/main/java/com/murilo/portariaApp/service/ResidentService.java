@@ -101,7 +101,6 @@ public class ResidentService {
 
     private ResidentResponseDTO toResponse(Resident resident) {
         return new ResidentResponseDTO(
-                resident.getId(),
                 resident.getName(),
                 resident.getPhone(),
                 resident.getEmail(),
