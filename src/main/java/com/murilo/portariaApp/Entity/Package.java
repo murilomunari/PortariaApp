@@ -3,6 +3,8 @@ package com.murilo.portariaApp.Entity;
 import com.murilo.portariaApp.enums.PackageStatus;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -18,6 +20,8 @@ public class Package {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @JdbcTypeCode(SqlTypes.CHAR)
+    @Column(length = 36)
     private UUID id;
 
     @Column(nullable = false, length = 150)
